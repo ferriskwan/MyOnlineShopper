@@ -1,1 +1,78 @@
-/* Add styles here */
+@layer base, components;
+
+@layer base {
+    :root {
+        --primary-color: #3b82f6;
+        --secondary-color: #10b981;
+        --background-color: #f0f4f8;
+        --text-color: #1f2937;
+        --card-background: #ffffff;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+        --glow-color: rgba(59, 130, 246, 0.5);
+
+        font-family: sans-serif;
+    }
+
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 1rem;
+        background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.02));
+    }
+
+    h1, h2 {
+        text-align: center;
+        color: var(--primary-color);
+    }
+
+    main {
+        display: grid;
+        gap: 2rem;
+        justify-content: center;
+    }
+}
+
+@layer components {
+    #search-form {
+        display: grid;
+        gap: 1rem;
+        padding: 2rem;
+        background: var(--card-background);
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px -5px var(--shadow-color);
+    }
+
+    #search-form input {
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+    }
+
+    #search-form button {
+        padding: 1rem;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        box-shadow: 0 0 20px var(--glow-color);
+        transition: transform 0.2s;
+    }
+
+    #search-form button:hover {
+        transform: scale(1.05);
+    }
+
+    #results-container {
+        display: grid;
+        gap: 1.5rem;
+        container-type: inline-size;
+    }
+
+    @container (min-width: 600px) {
+        #results-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}

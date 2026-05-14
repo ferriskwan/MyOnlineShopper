@@ -1,14 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Deal Finder</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <header>
+        <h1>Best Deal Finder</h1>
+    </header>
+    <main>
+        <section id="search-section">
+            <form id="search-form">
+                <label for="search-input">What are you looking for?</label>
+                <p>Include details like size, color, or model for the best results!</p>
+                <input type="text" id="search-input" placeholder="e.g., 'Nike Air Max 90, size 10, black'">
+                <button type="submit">Find Deals</button>
+            </form>
+        </section>
+        <section id="results-section">
+            <h2>Top 5 Deals</h2>
+            <div id="results-container"></div>
+        </section>
+    </main>
+    <script src="main.js" type="module"></script>
 </body>
 </html>

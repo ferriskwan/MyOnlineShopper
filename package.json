@@ -1,0 +1,19 @@
+{
+  "name": "my-online-shopper",
+  "version": "1.0.0",
+  "description": "A simple HTML/JS/CSS starter template",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.16.1",
+    "cheerio": "^1.2.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "puppeteer": "^24.43.1"
+  }
+}
