@@ -96,6 +96,46 @@ async function scrapeLazada(query) {
     }
 }
 
+async function scrapeGoogle(query) {
+    try {
+        const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+        const response = await axios.get(url, { headers: { 'User-Agent': USER_AGENT } });
+        const $ = cheerio.load(response.data);
+        const results = [];
+        $('.tF2Cxc').slice(0, 5).each((i, el) => {
+            const title = $(el).find('h3').text() || 'Unknown Result';
+            const link = $(el).find('a').attr('href') || '#';
+            results.push({
+                title,
+                price: 'Search Result',
+                image: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg',
+                link,
+                store: 'Google'
+            });
+        });
+        
+        if (results.length === 0) {
+            $('div.g').slice(0, 5).each((i, el) => {
+                const title = $(el).find('h3').text();
+                const link = $(el).find('a').attr('href');
+                if (title && link) {
+                    results.push({
+                        title,
+                        price: 'Search Result',
+                        image: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg',
+                        link,
+                        store: 'Google'
+                    });
+                }
+            });
+        }
+        return results;
+    } catch (e) {
+        console.error("Google scrape failed:", e.message);
+        return [];
+    }
+}
+
 app.get('/search', async (req, res) => {
     const query = req.query.q;
     if (!query) {
@@ -103,16 +143,17 @@ app.get('/search', async (req, res) => {
     }
 
     try {
-        const [amazonResults, shopeeResults, lazadaResults] = await Promise.all([
+        const [amazonResults, shopeeResults, lazadaResults, googleResults] = await Promise.all([
             scrapeAmazon(query),
             scrapeShopee(query),
-            scrapeLazada(query)
+            scrapeLazada(query),
+            scrapeGoogle(query)
         ]);
 
         const makeMocks = (store, count) => Array.from({length: count}).map((_, i) => ({
             title: `${store} Mock Result ${i+1} for ${query} (Live Fetch Failed)`,
-            price: `$${(Math.random() * 100 + 10).toFixed(2)}`,
-            image: 'https://via.placeholder.com/150',
+            price: store === 'Google' ? 'Search Result' : `$${(Math.random() * 100 + 10).toFixed(2)}`,
+            image: store === 'Google' ? 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' : 'https://via.placeholder.com/150',
             link: '#',
             store: store
         }));
@@ -120,7 +161,8 @@ app.get('/search', async (req, res) => {
         res.json({
             amazon: amazonResults.length > 0 ? amazonResults : makeMocks('Amazon SG', 10),
             shopee: shopeeResults.length > 0 ? shopeeResults : makeMocks('Shopee SG', 10),
-            lazada: lazadaResults.length > 0 ? lazadaResults : makeMocks('Lazada SG', 10)
+            lazada: lazadaResults.length > 0 ? lazadaResults : makeMocks('Lazada SG', 10),
+            google: googleResults.length > 0 ? googleResults.slice(0, 5) : makeMocks('Google', 5)
         });
         
     } catch (e) {

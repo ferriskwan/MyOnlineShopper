@@ -80,7 +80,7 @@ async function displaySearchResults(query) {
         
         resultsContainer.innerHTML = ''; // Clear loading
         
-        const allDeals = [...data.amazon, ...data.shopee, ...data.lazada];
+        const allDeals = [...data.amazon, ...data.shopee, ...data.lazada, ...(data.google || [])];
         
         if (allDeals.length === 0) {
              resultsContainer.innerHTML = '<p>No deals found.</p>';

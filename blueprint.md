@@ -15,7 +15,7 @@ This application helps users find the best deals for products across various onl
 ### Implemented Features
 
 *   **Search Input:** A clear and encouraging search prompt for the user to enter product details.
-*   **Live Web Scraping:** A Node.js backend using Express, Axios, and Cheerio that scrapes real live data from Amazon SG, Shopee SG, and Lazada SG based on user input, pulling up to 10 results per site. Falls back to mock data if bot protections are encountered.
+*   **Live Web Scraping & Search:** A Node.js backend using Express, Axios, and Cheerio that scrapes real live data from Amazon SG, Shopee SG, Lazada SG, and Google Search based on user input. It pulls up to 10 results from e-commerce sites and the top 5 results from Google, falling back to mock data if bot protections are encountered.
 *   **Top Results:** A display of the top deals found from the supported platforms.
 *   **Modern Tech Stack:** The application is built using modern HTML, CSS (including container queries, cascade layers, and CSS variables), JavaScript (ES Modules, Web Components), and a Node.js backend.
 
@@ -24,5 +24,5 @@ This application helps users find the best deals for products across various onl
 ### Recent Implementation
 
 1.  **Created a backend server (`server.js`):** Set up an Express server with `/search` endpoint to handle search queries.
-2.  **Integrated scraping logic:** Implemented functions to scrape Amazon, Shopee, and Lazada for the top 10 items.
-3.  **Updated Frontend (`main.js`):** Modified the `displaySearchResults` function to fetch data from the local backend API and render the combined top results from all three sites.
+2.  **Integrated scraping logic:** Implemented functions to scrape Amazon, Shopee, Lazada, and Google Search.
+3.  **Updated Frontend (`main.js`):** Modified the `displaySearchResults` function to fetch data from the local backend API and render the combined top results from all sites.
